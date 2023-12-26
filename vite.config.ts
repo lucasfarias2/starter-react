@@ -6,7 +6,7 @@ const isDev = process.env.BUN_ENV === 'development';
 
 export default defineConfig({
   plugins: [pluginReact(), tsconfigPaths()],
-  publicDir: './static',
+  publicDir: false,
   build: {
     outDir: './dist',
     emptyOutDir: true,

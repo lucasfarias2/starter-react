@@ -24,5 +24,5 @@
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx", "tailwind.config.js"],
-  "exclude": ["node_modules", "public", "dist", "postcss.config.js"]
+  "exclude": ["node_modules", "static", "dist", "postcss.config.js"]
 }

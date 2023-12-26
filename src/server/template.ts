@@ -46,6 +46,7 @@ export default function getTemplate(title: string, bundleName: string) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>${title}</title>
         ${renderHeadScripts(bundleName)}
+        <link rel="icon" type="image/ico" sizes="32x32" href="/static/favicon.ico">
       </head>
       <body>
         <div id="root"><!-- react --></div>

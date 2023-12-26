@@ -1,5 +1,6 @@
 {
-  "name": "bun-react",
+  "name": "starter-react",
+  "version": "1.0.0",
   "module": "index.ts",
   "type": "module",
   "scripts": {
