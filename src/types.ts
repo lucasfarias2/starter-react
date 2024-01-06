@@ -1,7 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-namespace */
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
 declare global {
+  namespace Express {
+    interface Request {
+      device?: IDevice;
+      user: PFYUser;
+    }
+
+    interface Response {
+      renderView: (
+        Component: React.FunctionComponent<any> | React.ComponentClass<any>,
+        props: any,
+        options: TRenderViewProps
+      ) => Promise<void>;
+      loadQueryKeys: (queryKeys: string[]) => Response;
+      queries: Record<string, unknown>;
+    }
+  }
+
+  export type TRenderViewProps = {
+    title: string;
+    withRouter?: boolean;
+    bundleName: string;
+  };
+
   export interface IDevice {
     type?: TDeviceType;
   }
@@ -19,7 +45,7 @@ declare global {
     device?: IDevice;
   }
 
-  export interface SUser {
+  export interface PFYUser {
     id: string;
     first_name?: string;
     last_name?: string;
@@ -28,11 +54,12 @@ declare global {
   }
 
   export interface IInitialState {
-    user: SUser;
+    user: PFYUser;
   }
 
   export interface IViewProps {
     initialState: IInitialState;
+    user?: PFYUser;
     device: IDevice;
   }
 

@@ -1,9 +1,4 @@
-import React from 'react';
-import { hydrateRoot } from 'react-dom/client';
 import App from '@/shared/pages/App';
+import hydrate from '../hydrate';
 
-const rootElement = document.getElementById('root');
-
-if (rootElement) {
-  hydrateRoot(rootElement, React.createElement(App));
-}
+hydrate(App, { withRouter: true });

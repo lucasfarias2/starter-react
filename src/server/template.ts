@@ -4,7 +4,7 @@ import manifest from '#/.vite/manifest.json';
 
 const isDev = Bun.env.BUN_ENV === 'development';
 
-type TManifestFile = Record<string, { file: string }>;
+type TManifestFile = Record<string, { file: string; imports?: string[] }>;
 
 function renderHeadScripts(bundleName: string) {
   if (isDev) {
@@ -23,17 +23,30 @@ function renderHeadScripts(bundleName: string) {
   } else {
     const cssFile = (manifest as TManifestFile)[`src/client/entries/global.css`]?.file;
 
+    /**
+     * Module preloads resolving from manifest file
+     * */
+    const imports: string[] = [];
+    const bundleModule = (manifest as TManifestFile)[`src/client/entries/${bundleName}.ts`];
+
+    if (bundleModule.imports && bundleModule.imports.length > 0) {
+      bundleModule.imports.forEach((importedModule: string) => {
+        const importedModuleFile = (manifest as TManifestFile)[importedModule]?.file;
+        imports.push(`<link rel="modulepreload" crossorigin href="/dist/${importedModuleFile}">`);
+      });
+    }
+
     return `
       <link rel="stylesheet" href="/dist/${cssFile}" />
-    `;
+    `.concat(imports.join(''));
   }
 }
 
 function renderBodyScripts(bundleName: string) {
-  const jsFile = (manifest as TManifestFile)[`src/client/entries/${bundleName}.ts`]?.file;
+  const module = (manifest as TManifestFile)[`src/client/entries/${bundleName}.ts`];
 
   return `
-    <script type="module" src="/dist/${jsFile}"></script>
+    <script type="module" src="/dist/${module?.file}"></script>
   `;
 }
 
@@ -46,9 +59,13 @@ export default function getTemplate(title: string, bundleName: string) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>${title}</title>
         ${renderHeadScripts(bundleName)}
-        <link rel="icon" type="image/ico" sizes="32x32" href="/static/favicon.ico">
+        <script>
+          <!-- Don't remove preloaded state comment, used for SSR props sharing -->
+          // preloaded-state
+        </script>
       </head>
       <body>
+        <!-- Don't remove react comment, used for SSR props sharing -->
         <div id="root"><!-- react --></div>
         ${!isDev ? renderBodyScripts(bundleName) : ''}
       </body>

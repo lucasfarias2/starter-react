@@ -1,3 +1,3 @@
 {
-  "extends": ["eslint-config-pfy"]
+  "extends": ["eslint-config-packlify"]
 }

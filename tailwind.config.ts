@@ -1,7 +1,11 @@
 export default {
-  content: ['./src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx,html}'],
+  darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        'screen-nav': 'calc(100vh - 100px)',
+      },
+    },
   },
-  plugins: [],
 };
