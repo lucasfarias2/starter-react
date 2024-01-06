@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LuActivity, LuAlertTriangle, LuCheck, LuClipboardCheck, LuPointer } from 'react-icons/lu';
+import { LuCheck, LuPointer } from 'react-icons/lu';
 import { Route, Routes } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import Navbar from '@/shared/components/AppNavbar';
